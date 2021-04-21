@@ -1,6 +1,7 @@
 package ru.depi.game;
 
 import ru.depi.game.sweeper.Coord;
+import ru.depi.game.sweeper.Ranges;
 import ru.depi.game.sweeper.enums.Box;
 
 import javax.swing.*;
@@ -14,8 +15,8 @@ import java.util.Locale;
 public class MineSweeper extends JFrame {
 
     private JPanel panel;
-    private final int COLS = 15;
-    private final int ROWS = 1;
+    private final int COLS = 9;
+    private final int ROWS = 9;
     private final int IMAGE_SIZE = 50;
 
     public static void main(String[] args) {
@@ -23,6 +24,7 @@ public class MineSweeper extends JFrame {
     }
 
     private MineSweeper() {
+        Ranges.setSize(new Coord(COLS, ROWS));
         setImages();
         initPanel();
         initFrame();
@@ -33,13 +35,16 @@ public class MineSweeper extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                for (Box box : Box.values()) {
-                    Coord coord = new Coord(box.ordinal() * IMAGE_SIZE, 0);
-                    g.drawImage((Image)box.image, coord.getX(), coord.getY(),this);
+                for (Coord coord : Ranges.getAllCoords()) {
+                    g.drawImage((Image)Box.BOMB.image,
+                            coord.getX() * IMAGE_SIZE, coord.getY() * IMAGE_SIZE,this);
                 }
             }
         };
-        panel.setPreferredSize(new Dimension(COLS * IMAGE_SIZE, ROWS * IMAGE_SIZE));
+        panel.setPreferredSize(new Dimension(
+                Ranges.getSize().getX() * IMAGE_SIZE,
+                Ranges.getSize().getY() * IMAGE_SIZE
+        ));
         add(panel);
     }
 
