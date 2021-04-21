@@ -1,10 +1,10 @@
 package ru.depi.game;
 
+import ru.depi.game.sweeper.enums.Box;
+
 import javax.swing.*;
 import java.awt.*;
-import java.nio.file.Paths;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author DePi
@@ -22,6 +22,7 @@ public class MineSweeper extends JFrame {
     }
 
     private MineSweeper() {
+        setImages();
         initPanel();
         initFrame();
     }
@@ -31,8 +32,10 @@ public class MineSweeper extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(getImage("bomb"), 0, 0, this);
-                g.drawImage(getImage("num1"), IMAGE_SIZE, 0, this);
+                for (Box box : Box.values()) {
+                    g.drawImage((Image)box.image,
+                            box.ordinal() * IMAGE_SIZE, 0, this);
+                }
             }
         };
         panel.setPreferredSize(new Dimension(COLS * IMAGE_SIZE, ROWS * IMAGE_SIZE));
@@ -48,6 +51,12 @@ public class MineSweeper extends JFrame {
         setVisible(true);
     }
 
+    private void setImages() {
+        for (Box box : Box.values()) {
+            box.image = getImage(box.name());
+        }
+    }
+    
     private Image getImage(String name) {
         String fileName = "resources/img/" + name.toLowerCase(Locale.ROOT) + ".png";
         ImageIcon icon = new ImageIcon(fileName);
