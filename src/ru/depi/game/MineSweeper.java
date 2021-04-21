@@ -1,5 +1,6 @@
 package ru.depi.game;
 
+import ru.depi.game.sweeper.Coord;
 import ru.depi.game.sweeper.enums.Box;
 
 import javax.swing.*;
@@ -33,8 +34,8 @@ public class MineSweeper extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 for (Box box : Box.values()) {
-                    g.drawImage((Image)box.image,
-                            box.ordinal() * IMAGE_SIZE, 0, this);
+                    Coord coord = new Coord(box.ordinal() * IMAGE_SIZE, 0);
+                    g.drawImage((Image)box.image, coord.getX(), coord.getY(),this);
                 }
             }
         };
@@ -49,6 +50,7 @@ public class MineSweeper extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+        setIconImage(getImage("icon"));
     }
 
     private void setImages() {
