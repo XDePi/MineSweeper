@@ -28,6 +28,7 @@ public class MineSweeper extends JFrame {
 
     private MineSweeper() {
         game = new Game(COLS, ROWS);
+        game.start();
         Ranges.setSize(new Coord(COLS, ROWS));
         setImages();
         initPanel();
@@ -53,13 +54,13 @@ public class MineSweeper extends JFrame {
     }
 
     private void initFrame() {
-        pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("MineSweeper");
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
         setIconImage(getImage("icon"));
+        pack();
     }
 
     private void setImages() {

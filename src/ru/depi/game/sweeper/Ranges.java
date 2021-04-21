@@ -32,4 +32,9 @@ public class Ranges {
     public static void setAllCoords(ArrayList<Coord> allCoords) {
         Ranges.allCoords = allCoords;
     }
+
+    static boolean inRange(Coord coord) {
+        return coord.getX() >= 0 && coord.getX() < size.getX()
+                && coord.getY() >= 0 && coord.getY() < size.getY();
+    }
 }
