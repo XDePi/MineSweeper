@@ -1,6 +1,7 @@
 package ru.depi.game;
 
 import ru.depi.game.sweeper.Coord;
+import ru.depi.game.sweeper.Game;
 import ru.depi.game.sweeper.Ranges;
 import ru.depi.game.sweeper.enums.Box;
 
@@ -14,6 +15,8 @@ import java.util.Locale;
 
 public class MineSweeper extends JFrame {
 
+    private Game game;
+
     private JPanel panel;
     private final int COLS = 9;
     private final int ROWS = 9;
@@ -24,6 +27,7 @@ public class MineSweeper extends JFrame {
     }
 
     private MineSweeper() {
+        game = new Game(COLS, ROWS);
         Ranges.setSize(new Coord(COLS, ROWS));
         setImages();
         initPanel();
@@ -36,7 +40,7 @@ public class MineSweeper extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 for (Coord coord : Ranges.getAllCoords()) {
-                    g.drawImage((Image)Box.BOMB.image,
+                    g.drawImage((Image)game.getBox(coord).image,
                             coord.getX() * IMAGE_SIZE, coord.getY() * IMAGE_SIZE,this);
                 }
             }
