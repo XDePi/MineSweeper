@@ -14,6 +14,15 @@ public class Coord {
         this.y = y;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Coord) {
+            Coord to = (Coord) o;
+            return to.getX() == x && to.getY() == y;
+        }
+        return super.equals(o);
+    }
+
     public int getX() {
         return x;
     }
