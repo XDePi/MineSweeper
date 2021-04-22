@@ -50,4 +50,8 @@ class Bomb {
     Box get(Coord coord) {
         return  bombMap.get(coord);
     }
+
+    public int getTotalBombs() {
+        return totalBombs;
+    }
 }
