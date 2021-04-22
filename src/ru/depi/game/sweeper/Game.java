@@ -32,4 +32,8 @@ public class Game {
     public void pressLeftButton(Coord coord) {
         flag.setOpenedToBox(coord);
     }
+
+    public void pressRightButton(Coord coord) {
+        flag.setFlaggedToBox(coord);
+    }
 }

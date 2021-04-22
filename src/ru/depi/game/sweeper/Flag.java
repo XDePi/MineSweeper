@@ -21,4 +21,8 @@ class Flag {
     public void setOpenedToBox(Coord coord) {
         flagMap.set(coord, Box.OPENED);
     }
+
+    public void setFlaggedToBox(Coord coord) {
+        flagMap.set(coord, Box.FLAGGED);
+    }
 }
