@@ -7,6 +7,8 @@ import ru.depi.game.sweeper.enums.Box;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 /**
@@ -47,10 +49,22 @@ public class MineSweeper extends JFrame {
                 }
             }
         };
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int x = e.getX() / IMAGE_SIZE;
+                int y = e.getY() / IMAGE_SIZE;
+                Coord coord = new Coord(x, y);
+                if (e.getButton() == MouseEvent.BUTTON1)
+                    game.pressLeftButton(coord);
+                panel.repaint();
+            }
+        });
+
         panel.setPreferredSize(new Dimension(
                 Ranges.getSize().getX() * IMAGE_SIZE,
-                Ranges.getSize().getY() * IMAGE_SIZE
-        ));
+                Ranges.getSize().getY() * IMAGE_SIZE));
         add(panel);
     }
 
