@@ -20,6 +20,7 @@ public class MineSweeper extends JFrame {
     private Game game;
 
     private JPanel panel;
+    private JLabel label;
     private final int COLS = 9;
     private final int ROWS = 9;
     private final int BOMBS = 10;
@@ -34,8 +35,14 @@ public class MineSweeper extends JFrame {
         game.start();
         Ranges.setSize(new Coord(COLS, ROWS));
         setImages();
+        initLabel();
         initPanel();
         initFrame();
+    }
+
+    private void initLabel() {
+        label = new JLabel("Welcome!");
+        add(label, BorderLayout.SOUTH);
     }
 
     private void initPanel() {
@@ -60,6 +67,9 @@ public class MineSweeper extends JFrame {
                     game.pressLeftButton(coord);
                 if (e.getButton() == MouseEvent.BUTTON3)
                     game.pressRightButton(coord);
+                if (e.getButton() == MouseEvent.BUTTON2)
+                    game.start();
+                label.setText(getMessage());
                 panel.repaint();
             }
         });
@@ -68,6 +78,15 @@ public class MineSweeper extends JFrame {
                 Ranges.getSize().getX() * IMAGE_SIZE,
                 Ranges.getSize().getY() * IMAGE_SIZE));
         add(panel);
+    }
+
+    private String getMessage() {
+        switch (game.getState()) {
+            case PLAYED : return "In progress..";
+            case BOMBED : return "Mission failed";
+            case WINNER : return "Mission success";
+            default : return "Welcome";
+        }
     }
 
     private void initFrame() {
