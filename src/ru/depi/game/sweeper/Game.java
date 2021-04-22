@@ -32,22 +32,38 @@ public class Game {
             return flag.get(coord);
     }
 
-    public void pressLeftButton(Coord coord) {
-        openBox(coord);
-        checkWinner();
-    }
-
     private void openBox(Coord coord) {
         switch (flag.get(coord)) {
-            case OPENED  : return;
+            case OPENED  : setOpenedToClosedBoxesAroundNumber(coord); return;
             case FLAGGED : return;
             case CLOSED  :
                 switch (bomb.get(coord)) {
                     case ZERO : openBoxesAround(coord); return;
-                    case BOMB : return;
+                    case BOMB : openBombs(coord); return;
                     default   : flag.setOpenedToBox(coord); return;
                 }
         }
+    }
+
+    private void openBombs(Coord bombed) {
+        state = GameState.BOMBED;
+        flag.setBombedToBox(bombed);
+        for (Coord coord :
+                Ranges.getAllCoords()) {
+            if (bomb.get(coord) == Box.BOMB)
+                flag.setOpenedToClosedBombBox(coord);
+            else
+                flag.setNoBombToFlaggedSafeBox(coord);
+        }
+    }
+
+    void setOpenedToClosedBoxesAroundNumber(Coord coord) {
+        if (bomb.get(coord) != Box.BOMB)
+            if (flag.getCountOfFlaggedBoxesAround(coord) == bomb.get(coord).getNumber())
+                for (Coord around : Ranges.getCoordsAround(coord)) {
+                    if (flag.get(around) == Box.CLOSED)
+                        openBox(around);
+                }
     }
 
     private void checkWinner() {
@@ -64,7 +80,21 @@ public class Game {
     }
 
     public void pressRightButton(Coord coord) {
+        if (gameOver()) return;
         flag.toggleFlaggedToBox(coord);
+    }
+
+    public void pressLeftButton(Coord coord) {
+        if (gameOver()) return;
+        openBox(coord);
+        checkWinner();
+    }
+
+    private boolean gameOver() {
+        if (state == GameState.PLAYED)
+            return false;
+        start();
+        return true;
     }
 
     public GameState getState() {
