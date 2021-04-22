@@ -1,0 +1,20 @@
+package ru.depi.game.sweeper;
+
+import ru.depi.game.sweeper.enums.Box;
+
+/**
+ * @author DePi
+ **/
+
+class Flag {
+
+    private Matrix flagMap;
+
+    void start() {
+        flagMap = new Matrix(Box.CLOSED);
+    }
+
+    Box get(Coord coord) {
+        return flagMap.get(coord);
+    }
+}
