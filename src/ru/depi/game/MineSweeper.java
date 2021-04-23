@@ -106,7 +106,7 @@ public class MineSweeper extends JFrame {
     }
     
     private Image getImage(String name) {
-        String fileName = "resources/img/" + name.toLowerCase(Locale.ROOT) + ".png";
+        String fileName = "src/resources/img/" + name.toLowerCase(Locale.ROOT) + ".png";
         ImageIcon icon = new ImageIcon(fileName);
         return icon.getImage();
     }
